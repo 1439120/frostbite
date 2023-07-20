@@ -1,11 +1,11 @@
-#include <SFML/Graphics.hpp>
+#include "GameWindow.h"
+#include "Coordniates.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
+    auto screen_size = Coordinates(1020, 600);
+    sf::RenderWindow window(sf::VideoMode(screen_size.x, screen_size.y), "Frostbite");
+    GameWindow game_window = GameWindow(screen_size);
     while (window.isOpen())
     {
         sf::Event event;
@@ -16,7 +16,8 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        // window.draw(shape);
+        game_window.Display(&window);
         window.display();
     }
 
