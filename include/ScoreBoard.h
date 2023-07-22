@@ -7,9 +7,14 @@
 class ScoreBoard
 {
 public:
-    ScoreBoard(Coordinates); // Creates game view based on screen size
+    ScoreBoard(Coordinates); //
+    void Display(sf::RenderWindow *window);
 
 private:
+    sf::Font font_vouge;
+    sf::Text score;
+    sf::Text temperature;
+    sf::Text level;
 };
 
 #endif // GAMEWINDOW_H
