@@ -13,7 +13,7 @@ ScoreBoard::ScoreBoard(Coordinates screen_size)
     score.setString("0");
     score.setPosition(sf::Vector2f(width * 2 - width, height / 2));
     temperature.setFont(font_vouge);
-    temperature.setString("0 \u00B0");
+    temperature.setString("45 \u00B0");
     temperature.setPosition(sf::Vector2f(width * 2 - width, height * 2));
     level.setFont(font_vouge);
     level.setString("0");

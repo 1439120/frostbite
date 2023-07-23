@@ -17,4 +17,4 @@ private:
     sf::Text level;
 };
 
-#endif // GAMEWINDOW_H
+#endif // SCOREBOARD_H
