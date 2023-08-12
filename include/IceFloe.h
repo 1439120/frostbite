@@ -12,7 +12,9 @@ public:
     void Display(sf::RenderWindow *window);
     void FlipColor();
     void AdjustPosition(Coordinates);
+    void UpdatePosition(Coordinates);
     const Coordinates GetSize() const;
+    const Coordinates GetPosition() const;
 
 private:
     sf::RectangleShape top_bar;
