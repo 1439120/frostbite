@@ -79,9 +79,8 @@ std::tuple<bool, int> CollisionDetector::EntityIceFloeCollision(Coordinates posi
         for (auto ice_floe_layer = _ice_floe_layers[i].begin(); ice_floe_layer != _ice_floe_layers[i].end(); ice_floe_layer++)
         {
 
-            if (position.x - 2 >= ice_floe_layer->x && position.x - 2 <= ice_floe_layer->x + _ice_floe_size.x)
+            if (position.x >= ice_floe_layer->x - 3 && position.x + length <= ice_floe_layer->x + _ice_floe_size.x)
             {
-                // std::cout << position.y << " " << ice_floe_layer->y << "\n";
                 if (position.y + height >= ice_floe_layer->y && position.y + height <= ice_floe_layer->y + _ice_floe_size.y / 7)
                     return std::tuple<bool, int>(true, i);
             }

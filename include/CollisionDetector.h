@@ -4,7 +4,6 @@
 #include "Coordniates.h"
 #include <vector>
 #include <tuple>
-#include <iostream>
 
 class CollisionDetector
 {
