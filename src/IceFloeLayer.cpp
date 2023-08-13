@@ -28,7 +28,7 @@ const Coordinates IceFloeLayer::GetSize() const
     // x value of last block plus its width minus x value of first block = length
     // height of block
     auto x_value = ice_floe_layer[2].GetPosition().x + ice_floe_layer[2].GetSize().x - ice_floe_layer[0].GetPosition().x;
-    auto y_value = ice_floe_layer[0].GetPosition().y;
+    auto y_value = ice_floe_layer[0].GetSize().y;
     return Coordinates(x_value, y_value);
 }
 

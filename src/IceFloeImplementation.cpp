@@ -1,14 +1,14 @@
 #include "IceFloeLayerImplementation.h"
 
-IceFloeLayerImplementation::IceFloeLayerImplementation(Coordinates current_position, Coordinates ice_size, Direction current_direction)
-    : _current_direction(current_direction), _ice_size(ice_size)
+IceFloeLayerImplementation::IceFloeLayerImplementation(Coordinates current_position, Coordinates size, Direction current_direction)
+    : _current_direction(current_direction), _size(size)
 
 {
     // _current_position(current_position),
     for (auto i = 0.0f; i < 5; i += 1.8)
     {
         Coordinates coordinates = current_position;
-        coordinates.x = coordinates.x + i * _ice_size.x / 4.6;
+        coordinates.x = coordinates.x + i * _size.x / 4.6;
         _current_position.push_back(coordinates);
     }
 }
@@ -57,13 +57,13 @@ std::vector<Coordinates> IceFloeLayerImplementation::MovePerIceFloe(CollisionDet
         {
             _current_position[i].x += speed;
             if (collision_detector.RightScreenEntityCollision(_current_position[i]))
-                _current_position[i].x = -_ice_size.x / 4.6;
+                _current_position[i].x = -_size.x / 4.6;
         }
         else
         {
             _current_position[i].x -= speed;
             auto check_collision_with = _current_position[i];
-            check_collision_with.x += _ice_size.x / 4.6;
+            check_collision_with.x += _size.x / 4.6;
             if (collision_detector.LeftScreenEntityCollision(check_collision_with))
                 _current_position[i].x = collision_detector.GetScreenSize().x;
         }
@@ -83,5 +83,5 @@ const Coordinates IceFloeLayerImplementation::GetPosition() const
 
 float IceFloeLayerImplementation::GetLength() const
 {
-    return _ice_size.x;
+    return _size.x;
 }
