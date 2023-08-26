@@ -15,6 +15,7 @@ public:
     void UpdatePosition(Coordinates);
     const Coordinates GetSize() const;
     const Coordinates GetPosition() const;
+    const bool IsOriginalColor() const;
 
 private:
     sf::RectangleShape top_bar;

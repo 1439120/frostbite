@@ -56,11 +56,11 @@ int main()
                 }
                 else if (event.key.code == sf::Keyboard::Up)
                 {
-                    _player.MoveUp(collision_detector);
+                    _player.MoveUp();
                 }
                 else if (event.key.code == sf::Keyboard::Down)
                 {
-                    _player.MoveDown(collision_detector);
+                    _player.MoveDown();
                 }
             }
         }

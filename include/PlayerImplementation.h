@@ -12,8 +12,8 @@ public:
     PlayerImplementation(Coordinates, Coordinates, Direction); //
     bool MoveLeft(CollisionDetector &, float = 15);
     bool MoveRight(CollisionDetector &, float = 15);
-    bool MoveDown(CollisionDetector &, float = 15);
-    bool MoveUp(CollisionDetector &, float = 15);
+    bool MoveDown(float = 3);
+    bool MoveUp(float = 4);
     void AutomatedMotion(CollisionDetector &);
     Coordinates GetPosition() const;
 

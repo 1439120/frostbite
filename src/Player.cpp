@@ -6,7 +6,8 @@ Player::Player(Coordinates screen_size)
     if (!player_texture.loadFromFile("res/img/player.png"))
         throw "Player texture failed to load";
 
-    size = Coordinates(24.0f, screen_size.x * 1 / 20);
+    size.x = 24.0f;
+    size.y = screen_size.x * 1 / 20;
     player.setSize(sf::Vector2f(size.x, size.y));
     player.setTexture(&player_texture);
 }

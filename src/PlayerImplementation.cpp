@@ -22,22 +22,26 @@ bool PlayerImplementation::MoveRight(CollisionDetector &collision_detector, floa
         return false;
     return true;
 }
-bool PlayerImplementation::MoveDown(CollisionDetector &collision_detector, float speed)
+bool PlayerImplementation::MoveDown(float speed)
 {
     if (!is_mid_air)
     {
         is_mid_air = true;
         _vertical_motion = 0;
-        _current_position.y = _current_position.y + 3;
+        _current_position.y = _current_position.y + speed;
+        return true;
     }
+    return false;
 }
-bool PlayerImplementation::MoveUp(CollisionDetector &collision_detector, float speed)
+bool PlayerImplementation::MoveUp(float speed)
 {
     if (!is_mid_air)
     {
         is_mid_air = true;
-        _vertical_motion = -4;
+        _vertical_motion = -speed;
+        return true;
     }
+    return false;
 }
 
 Coordinates PlayerImplementation::GetPosition() const
@@ -67,13 +71,13 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
             _current_position.x = _current_position.x - 0.2;
         }
     }
-    else if (collision_detector.EntityWinnigBoundryCollision(_current_position, _size.x, _size.y) && _vertical_motion >= 0)
+    else if (collision_detector.EntityWinnigBoundryCollision(_current_position, _size.y) && _vertical_motion >= 0)
     {
         is_mid_air = false;
         _vertical_motion = 0;
     }
     else if (!std::get<0>(collision_check))
     {
-        MoveUp(collision_detector);
+        MoveUp();
     }
 }

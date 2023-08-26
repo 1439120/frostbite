@@ -12,8 +12,8 @@ CollisionDetector::CollisionDetector(Coordinates screen_size)
 bool CollisionDetector::ScreenEntityCollision(Coordinates position, float length, float height)
 {
 
-    if (RightScreenEntityCollision(position, length, height) || LeftScreenEntityCollision(position, length, height) ||
-        DownScreenEntityCollision(position, length, height) || UpScreenEntityCollision(position, length, height))
+    if (RightScreenEntityCollision(position, length) || LeftScreenEntityCollision(position) ||
+        DownScreenEntityCollision(position, height) || UpScreenEntityCollision(position))
     {
         return true;
     }
@@ -21,7 +21,7 @@ bool CollisionDetector::ScreenEntityCollision(Coordinates position, float length
     return false;
 }
 
-bool CollisionDetector::RightScreenEntityCollision(Coordinates position, float length, float height)
+bool CollisionDetector::RightScreenEntityCollision(Coordinates position, float length)
 {
     if (position.x + length >= _screen_size.x)
     {
@@ -31,9 +31,9 @@ bool CollisionDetector::RightScreenEntityCollision(Coordinates position, float l
     return false;
 }
 
-bool CollisionDetector::LeftScreenEntityCollision(Coordinates position, float length, float height)
+bool CollisionDetector::LeftScreenEntityCollision(Coordinates position, float length)
 {
-    if (position.x <= 0)
+    if (position.x + length <= 0)
     {
         return true;
     }
@@ -41,7 +41,7 @@ bool CollisionDetector::LeftScreenEntityCollision(Coordinates position, float le
     return false;
 }
 
-bool CollisionDetector::DownScreenEntityCollision(Coordinates position, float length, float height)
+bool CollisionDetector::DownScreenEntityCollision(Coordinates position, float height)
 {
     if (position.y + height >= _screen_size.y)
     {
@@ -51,9 +51,9 @@ bool CollisionDetector::DownScreenEntityCollision(Coordinates position, float le
     return false;
 }
 
-bool CollisionDetector::UpScreenEntityCollision(Coordinates position, float length, float height)
+bool CollisionDetector::UpScreenEntityCollision(Coordinates position, float height)
 {
-    if (position.y <= 0)
+    if (position.y + height <= 0)
     {
         return true;
     }
@@ -74,7 +74,7 @@ void CollisionDetector::UpdateIceFloeLayerPosition(std::vector<std::vector<Coord
 std::tuple<bool, int> CollisionDetector::EntityIceFloeCollision(Coordinates position, float length, float height)
 {
 
-    for (auto i = 0; i < _ice_floe_layers.size(); i++)
+    for (auto i = 0u; i < _ice_floe_layers.size(); i++)
     {
         for (auto ice_floe_layer = _ice_floe_layers[i].begin(); ice_floe_layer != _ice_floe_layers[i].end(); ice_floe_layer++)
         {
@@ -89,7 +89,7 @@ std::tuple<bool, int> CollisionDetector::EntityIceFloeCollision(Coordinates posi
     return std::tuple<bool, int>(false, -1);
 }
 
-bool CollisionDetector::EntityWinnigBoundryCollision(Coordinates position, float length, float height)
+bool CollisionDetector::EntityWinnigBoundryCollision(Coordinates position, float height)
 {
     if (position.y + height <= _winning_boundry && position.y + height >= _winning_boundry - 1)
         return true;

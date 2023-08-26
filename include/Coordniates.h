@@ -21,6 +21,18 @@ struct Coordinates
         x = coord.x;
         y = coord.y;
     }
+    bool operator==(const Coordinates &coord)
+    {
+        if (this->x == coord.x && this->y == coord.y)
+            return true;
+        return false;
+    }
+    bool operator!=(const Coordinates &coord)
+    {
+        if (this->x != coord.x || this->y != coord.y)
+            return true;
+        return false;
+    }
 };
 
 #endif // COORDINATES_H

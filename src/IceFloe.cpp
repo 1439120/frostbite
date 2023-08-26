@@ -105,25 +105,25 @@ void IceFloe::AdjustPosition(Coordinates adjust_by)
 void IceFloe::UpdatePosition(Coordinates new_position)
 {
     auto current_pos = top_bar.getPosition();
-    top_bar.setPosition(sf::Vector2f(new_position.x, current_pos.y));
+    top_bar.setPosition(sf::Vector2f(new_position.x + bar_height * 2, current_pos.y));
 
     current_pos = second_layer.getPosition();
-    second_layer.setPosition(sf::Vector2f(new_position.x - bar_height * 2, current_pos.y));
+    second_layer.setPosition(sf::Vector2f(new_position.x, current_pos.y));
 
     current_pos = third_layer.getPosition();
-    third_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 + bar_height / 2), current_pos.y));
+    third_layer.setPosition(sf::Vector2f(new_position.x - (bar_height / 2), current_pos.y));
 
     current_pos = fourth_layer.getPosition();
-    fourth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 4 + bar_height / 2), current_pos.y));
+    fourth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 + bar_height / 2), current_pos.y));
 
     current_pos = fifth_layer.getPosition();
-    fifth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 4 - bar_height / 3), current_pos.y));
+    fifth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 - bar_height / 3), current_pos.y));
 
     current_pos = sixth_layer.getPosition();
-    sixth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 4 + bar_height * 3 / 2), current_pos.y));
+    sixth_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 + bar_height * 3 / 2), current_pos.y));
 
     current_pos = seventh_layer.getPosition();
-    seventh_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 4 + bar_height * 5), current_pos.y));
+    seventh_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 + bar_height * 5), current_pos.y));
 }
 
 const Coordinates IceFloe::GetSize() const
@@ -134,4 +134,9 @@ const Coordinates IceFloe::GetSize() const
 const Coordinates IceFloe::GetPosition() const
 {
     return Coordinates(second_layer.getPosition().x, second_layer.getPosition().y);
+}
+
+const bool IceFloe::IsOriginalColor() const
+{
+    return isOriginal;
 }

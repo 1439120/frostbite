@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/nkosana/Documents/doctest-master/doctest"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "forcedInclude": [],
+            "browse": {
+                "path": [
+                    "/home/nkosana/Documents/doctest-master/doctest/*"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
