@@ -1,2 +1,2 @@
 # frostbite
-frostbite game implementation in c++ and sfm
+frostbite game implementation in c++ and sfml
