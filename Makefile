@@ -6,20 +6,20 @@ SRC		:= src
 INCLUDE	:= include
 LIB		:= lib
 
+# Standard dynamic linking (MSYS2 automatically handles these paths now)
 LIBRARIES	:= -lsfml-graphics -lsfml-window -lsfml-system
-EXECUTABLE	:= main
+EXECUTABLE	:= main.exe
 
+# OS Detection and Command Fixes
 ifeq ($(OS),Windows_NT)
-    # Windows native setup
-    CLEAN_CMD = if exist $(BIN)\* del /q $(BIN)\*
+    CLEAN_CMD = if exist $(BIN)\$(EXECUTABLE) del /q $(BIN)\$(EXECUTABLE)
     CLEAR_CMD = cls
-    FIX_PATH = $(subst /,\\,$1)
+    MKDIR_CMD = if not exist $(BIN) mkdir $(BIN)
     EXEC_PREFIX = $(BIN)\$(EXECUTABLE)
 else
-    # Linux/Mac setup
-    CLEAN_CMD = rm -f $(BIN)/* *.out
+    CLEAN_CMD = rm -f $(BIN)/$(EXECUTABLE) *.out
     CLEAR_CMD = clear
-    FIX_PATH = $1
+    MKDIR_CMD = mkdir -p $(BIN)
     EXEC_PREFIX = ./$(BIN)/$(EXECUTABLE)
 endif
 
@@ -30,7 +30,8 @@ run: clean all
 	$(EXEC_PREFIX)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*.cpp
-	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
+	$(MKDIR_CMD)
+	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) $^ -o $@ $(LIBRARIES)
 
 clean:
 	-$(CLEAN_CMD)

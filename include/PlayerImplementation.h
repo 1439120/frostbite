@@ -9,7 +9,7 @@
 class PlayerImplementation
 {
 public:
-    PlayerImplementation(Coordinates, Coordinates, Direction); //
+    PlayerImplementation(Coordinates, Coordinates, Direction, float=0.05); //
     bool MoveLeft(CollisionDetector &, float = 15);
     bool MoveRight(CollisionDetector &, float = 15);
     bool MoveDown(float = 3);
@@ -23,6 +23,7 @@ private:
     Coordinates _size;
     float _vertical_motion;
     bool is_mid_air;
+    float _icefloe_speed;
 };
 
 #endif // PLAYEYIMPLEMENTATION_H

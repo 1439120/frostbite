@@ -12,9 +12,9 @@ public:
 
 private:
     sf::Font font_vouge;
-    sf::Text score;
-    sf::Text temperature;
-    sf::Text level;
+    std::optional<sf::Text> score;
+    std::optional<sf::Text> temperature; 
+    std::optional<sf::Text> level;
 };
 
 #endif // SCOREBOARD_H

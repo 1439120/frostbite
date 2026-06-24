@@ -1,7 +1,7 @@
 #include "PlayerImplementation.h"
 
-PlayerImplementation::PlayerImplementation(Coordinates current_position, Coordinates size, Direction current_direction)
-    : _current_position(current_position), _current_direction(current_direction), _size(size)
+PlayerImplementation::PlayerImplementation(Coordinates current_position, Coordinates size, Direction current_direction, float icefloe_speed)
+    : _current_position(current_position), _current_direction(current_direction), _size(size), _icefloe_speed(icefloe_speed)
 
 {
     is_mid_air = false;
@@ -53,7 +53,7 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
 {
     if (is_mid_air)
     {
-        _current_position.y = _current_position.y + _vertical_motion / 10;
+        _current_position.y += _vertical_motion / 10;
         _vertical_motion += 0.01;
     }
 
@@ -64,11 +64,11 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
         _vertical_motion = 0;
         if (std::get<1>(collision_check) % 2 == 0)
         {
-            _current_position.x = _current_position.x + 0.2;
+            _current_position.x = _current_position.x + _icefloe_speed;
         }
         else
         {
-            _current_position.x = _current_position.x - 0.2;
+            _current_position.x = _current_position.x - _icefloe_speed;
         }
     }
     else if (collision_detector.EntityWinnigBoundryCollision(_current_position, _size.y) && _vertical_motion >= 0)
@@ -78,6 +78,6 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
     }
     else if (!std::get<0>(collision_check))
     {
-        MoveUp();
+        // MoveUp();
     }
 }

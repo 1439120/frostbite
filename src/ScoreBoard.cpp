@@ -3,26 +3,26 @@
 
 ScoreBoard::ScoreBoard(Coordinates screen_size)
 {
-    if (!font_vouge.loadFromFile("res/fonts/code_new_roman.otf"))
+    if (!font_vouge.openFromFile("res/fonts/code_new_roman.otf"))
     {
         throw "Font failed to load";
     }
     auto height = screen_size.y * 1 / 12;
     auto width = screen_size.x * 1 / 12;
-    score.setFont(font_vouge);
-    score.setString("0");
-    score.setPosition(sf::Vector2f(width * 2 - width, height / 2));
-    temperature.setFont(font_vouge);
-    temperature.setString(L"45°C");
-    temperature.setPosition(sf::Vector2f(width * 2 - width, height * 2));
-    level.setFont(font_vouge);
-    level.setString("0");
-    level.setPosition(sf::Vector2f(width * 2 + width, height * 2));
+
+    score.emplace(font_vouge, "0");
+    score->setPosition(sf::Vector2f(width * 2 - width, height / 2));
+    
+    temperature.emplace(font_vouge, L"45°C");
+    temperature->setPosition(sf::Vector2f(width * 2 - width, height * 2));
+
+    level.emplace(font_vouge, "0");
+    level->setPosition(sf::Vector2f(width * 2 + width, height * 2));
 }
 
 void ScoreBoard::Display(sf::RenderWindow *window)
 {
-    window->draw(score);
-    window->draw(temperature);
-    window->draw(level);
+    window->draw(*score);
+    window->draw(*temperature);
+    window->draw(*level);
 }
