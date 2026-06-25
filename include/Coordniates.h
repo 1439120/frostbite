@@ -4,14 +4,14 @@
 
 struct Coordinates
 {
-    double x;
-    double y;
+    float x;
+    float y;
     Coordinates()
     {
         x = 0;
         y = 0;
     }
-    Coordinates(double x, double y)
+    Coordinates(float x, float y)
     {
         this->x = x;
         this->y = y;

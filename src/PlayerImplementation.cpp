@@ -28,7 +28,7 @@ bool PlayerImplementation::MoveDown(float speed)
     {
         is_mid_air = true;
         _vertical_motion = 0;
-        _current_position.y = _current_position.y + speed;
+        _current_position.y = _current_position.y + speed * 0.75;
         return true;
     }
     return false;

@@ -13,9 +13,9 @@ public:
     void FlipColor();
     void AdjustPosition(Coordinates);
     void UpdatePosition(Coordinates);
-    const Coordinates GetSize() const;
-    const Coordinates GetPosition() const;
-    const bool IsOriginalColor() const;
+    Coordinates GetSize() const;
+    Coordinates GetPosition() const;
+    bool IsOriginalColor() const;
 
 private:
     sf::RectangleShape top_bar;

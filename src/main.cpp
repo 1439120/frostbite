@@ -24,7 +24,9 @@ int main()
     auto player = Player(screen_size);
     player.AdjustPosition(Coordinates(screen_size.x / 2, screen_size.y * 3 / 4 + 10));
     auto igloo = Igloo(screen_size);
-    const auto icefloe_speed = 0.2;
+    const auto icefloe_speed = 0.05;
+    const auto player_speed = 500 * icefloe_speed;
+    const auto jump_speed = player_speed * 0.1;
 
     /**Implementation Classes*/
     /***ICE FLOES*/
@@ -48,11 +50,11 @@ int main()
             {
                 if (keyPressed->code == sf::Keyboard::Key::Left)
                 {
-                    _player.MoveLeft(collision_detector);
+                    _player.MoveLeft(collision_detector, player_speed);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Right)
                 {
-                    _player.MoveRight(collision_detector);
+                    _player.MoveRight(collision_detector, player_speed);
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Up)
                 {
@@ -60,7 +62,7 @@ int main()
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Down)
                 {
-                    _player.MoveDown();
+                    _player.MoveDown(jump_speed);
                 }
             }
         }

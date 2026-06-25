@@ -126,17 +126,17 @@ void IceFloe::UpdatePosition(Coordinates new_position)
     seventh_layer.setPosition(sf::Vector2f(new_position.x - (bar_height * 2 + bar_height * 5), current_pos.y));
 }
 
-const Coordinates IceFloe::GetSize() const
+Coordinates IceFloe::GetSize() const
 {
     return Coordinates(bar_width, bar_height);
 }
 
-const Coordinates IceFloe::GetPosition() const
+Coordinates IceFloe::GetPosition() const
 {
     return Coordinates(second_layer.getPosition().x, second_layer.getPosition().y);
 }
 
-const bool IceFloe::IsOriginalColor() const
+bool IceFloe::IsOriginalColor() const
 {
     return isOriginal;
 }
