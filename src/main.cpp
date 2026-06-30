@@ -6,6 +6,7 @@
 #include "IceFloeLayerImplementation.h"
 #include "CollisionDetector.h"
 #include "PlayerImplementation.h"
+#include "WelcomeWindow.h"
 
 const auto screen_size = Coordinates(1000, 600);
 const auto board_width = 3;
@@ -23,6 +24,8 @@ int main()
     auto ice_floe_layer4 = IceFloeLayer(screen_size, Coordinates(350, 215));
     auto player = Player(screen_size);
     player.AdjustPosition(Coordinates(screen_size.x / 2, screen_size.y * 3 / 4 + 10));
+    auto welcome_window = WelcomeWindow();
+    /* Game control constants */
     auto igloo = Igloo(screen_size);
     const auto icefloe_speed = 0.05;
     const auto player_speed = 500 * icefloe_speed;
@@ -90,14 +93,15 @@ int main()
 
         // Display objects on the screen
         window.clear();
-        game_window.Display(&window);
-        score_bored.Display(&window);
-        ice_floe_layer1.Display(&window);
-        ice_floe_layer2.Display(&window);
-        ice_floe_layer3.Display(&window);
-        ice_floe_layer4.Display(&window);
-        player.Display(&window);
-        igloo.Display(&window);
+        welcome_window.drawMainMenu(&window);
+        // game_window.Display(&window);
+        // score_bored.Display(&window);
+        // ice_floe_layer1.Display(&window);
+        // ice_floe_layer2.Display(&window);
+        // ice_floe_layer3.Display(&window);
+        // ice_floe_layer4.Display(&window);
+        // player.Display(&window);
+        // igloo.Display(&window);
         window.display();
     }
 
