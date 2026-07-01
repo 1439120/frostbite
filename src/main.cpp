@@ -30,6 +30,7 @@ int main()
     const auto icefloe_speed = 0.05;
     const auto player_speed = 500 * icefloe_speed;
     const auto jump_speed = player_speed * 0.1;
+    auto game_status = GameState::MAIN_MENU;
 
     /**Implementation Classes*/
     /***ICE FLOES*/
@@ -46,11 +47,29 @@ int main()
     {
         while (const std::optional event = window.pollEvent())
         {
+            // 1. Handle Window Closing
             if (event->is<sf::Event::Closed>())
                 window.close();
 
+            // 2. Handle Mouse Clicks
+            if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+                if (mousePressed->button == sf::Mouse::Button::Left) {
+                    game_status = welcome_window.handleMouseClick(mousePressed->position.x, mousePressed->position.y, &window);
+                }
+            }
+            // 3. Handle Mouse Movement
+            if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>()) {
+                welcome_window.handleMouseMove(mouseMoved->position.x, mouseMoved->position.y);
+            }
+            // 4. Handle Keyboard Presses
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
+                if (keyPressed->code == sf::Keyboard::Key::Escape) {
+                    if (game_status == GAME_PLAY) {
+                        game_status = GameState::MAIN_MENU;
+                    }
+                }
+                //playing game
                 if (keyPressed->code == sf::Keyboard::Key::Left)
                 {
                     _player.MoveLeft(collision_detector, player_speed);
@@ -70,38 +89,48 @@ int main()
             }
         }
 
-        // Moving the ice blocks
-        auto ice_floe_1_position = _ice_floe_layer1.MovePerIceFloe(collision_detector, icefloe_speed);
-        ice_floe_layer1.UpdatePerIce(ice_floe_1_position);
-        auto ice_floe_2_position = _ice_floe_layer2.MovePerIceFloe(collision_detector, icefloe_speed);
-        ice_floe_layer2.UpdatePerIce(ice_floe_2_position);
-        auto ice_floe_3_position = _ice_floe_layer3.MovePerIceFloe(collision_detector, icefloe_speed);
-        ice_floe_layer3.UpdatePerIce(ice_floe_3_position);
-        auto ice_floe_4_position = _ice_floe_layer4.MovePerIceFloe(collision_detector, icefloe_speed);
-        ice_floe_layer4.UpdatePerIce(ice_floe_4_position);
+        if(game_status == GameState::GAME_PLAY){
+            // Moving the ice blocks
+            auto ice_floe_1_position = _ice_floe_layer1.MovePerIceFloe(collision_detector, icefloe_speed);
+            ice_floe_layer1.UpdatePerIce(ice_floe_1_position);
+            auto ice_floe_2_position = _ice_floe_layer2.MovePerIceFloe(collision_detector, icefloe_speed);
+            ice_floe_layer2.UpdatePerIce(ice_floe_2_position);
+            auto ice_floe_3_position = _ice_floe_layer3.MovePerIceFloe(collision_detector, icefloe_speed);
+            ice_floe_layer3.UpdatePerIce(ice_floe_3_position);
+            auto ice_floe_4_position = _ice_floe_layer4.MovePerIceFloe(collision_detector, icefloe_speed);
+            ice_floe_layer4.UpdatePerIce(ice_floe_4_position);
 
-        collision_detector.UpdateIceFloeLayerPosition(std::vector<std::vector<Coordinates>>{
-            ice_floe_1_position,
-            ice_floe_2_position,
-            ice_floe_3_position,
-            ice_floe_4_position,
-        });
+            collision_detector.UpdateIceFloeLayerPosition(std::vector<std::vector<Coordinates>>{
+                ice_floe_1_position,
+                ice_floe_2_position,
+                ice_floe_3_position,
+                ice_floe_4_position,
+            });
 
-        // Moving the player
-        _player.AutomatedMotion(collision_detector);
-        player.UpdatePosition(_player.GetPosition());
-
+            // Moving the player
+            _player.AutomatedMotion(collision_detector);
+            player.UpdatePosition(_player.GetPosition());
+        }
+        
         // Display objects on the screen
         window.clear();
-        welcome_window.drawMainMenu(&window);
-        // game_window.Display(&window);
-        // score_bored.Display(&window);
-        // ice_floe_layer1.Display(&window);
-        // ice_floe_layer2.Display(&window);
-        // ice_floe_layer3.Display(&window);
-        // ice_floe_layer4.Display(&window);
-        // player.Display(&window);
-        // igloo.Display(&window);
+        if(game_status == GameState::MAIN_MENU){
+            welcome_window.drawMainMenu(&window);
+        }
+        else if(game_status == GameState::GAME_PLAY){
+            game_window.Display(&window);
+            score_bored.Display(&window);
+            ice_floe_layer1.Display(&window);
+            ice_floe_layer2.Display(&window);
+            ice_floe_layer3.Display(&window);
+            ice_floe_layer4.Display(&window);
+            player.Display(&window);
+            igloo.Display(&window);
+        }else if(game_status == GameState::INSTRUCTIONS){
+            welcome_window.drawInstructions(&window);
+        }else if(game_status == GameState::SCORE_HISTORY){
+            welcome_window.drawScoreHistory(&window);
+        }
         window.display();
     }
 
