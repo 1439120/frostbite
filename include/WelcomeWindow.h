@@ -20,7 +20,8 @@ enum GameState {
     MAIN_MENU,
     INSTRUCTIONS,
     GAME_PLAY,
-    SCORE_HISTORY
+    SCORE_HISTORY,
+    PAUSED,
 };
 
 class WelcomeWindow {
@@ -47,66 +48,8 @@ class WelcomeWindow {
         void drawMainMenu(sf::RenderWindow *window);
         void drawInstructions(sf::RenderWindow *window);
         void drawScoreHistory(sf::RenderWindow *window);
-
-        // void run() {
-        //     while (window.isOpen()) {
-        //         sf::Event event;
-        //         while (window.pollEvent(event)) {
-        //             if (event.type == sf::Event::Closed) {
-        //                 window.close();
-        //             }
-        //             else if (event.type == sf::Event::MouseButtonPressed) {
-        //                 if (event.mouseButton.button == sf::Mouse::Left) {
-        //                     handleMouseClick(event.mouseButton.x, event.mouseButton.y);
-        //                 }
-        //             }
-        //             else if (event.type == sf::Event::MouseMoved) {
-        //                 handleMouseMove(event.mouseMove.x, event.mouseMove.y);
-        //             }
-        //             else if (event.type == sf::Event::KeyPressed) {
-        //                 if (event.key.code == sf::Keyboard::Escape) {
-        //                     if (currentState == GAME_PLAY) {
-        //                         // Pause game or return to menu
-        //                         std::cout << "Game paused" << std::endl;
-        //                     }
-        //                 }
-        //             }
-        //         }
-                
-        //         window.clear(sf::Color(30, 30, 80)); // Dark blue background
-                
-        //         // Draw based on current state
-        //         switch (currentState) {
-        //             case MAIN_MENU:
-        //                 drawMainMenu();
-        //                 break;
-        //             case INSTRUCTIONS:
-        //                 drawInstructions();
-        //                 break;
-        //             case SCORE_HISTORY:
-        //                 drawScoreHistory();
-        //                 break;
-        //             case GAME_PLAY:
-        //                 // Here you would call your game rendering
-        //                 drawGame();
-        //                 break;
-        //         }
-                
-        //         window.display();
-        //     }
-        // }
-        
-        // void drawGame() {
-        //     // This is where you would draw your actual game
-        //     // For now, we'll show a placeholder
-        //     sf::Text gameText;
-        //     gameText.setFont(font);
-        //     gameText.setString("GAME IN PROGRESS\n\nPress ESC to pause");
-        //     gameText.setCharacterSize(30);
-        //     gameText.setFillColor(sf::Color::White);
-        //     gameText.setPosition(250, 250);
-        //     window.draw(gameText);
-        // }
+        void drawGamePaused(sf::RenderWindow *window);
+        void drawGame(sf::RenderWindow *window);
     
         // Method to add score from game
         void addGameScore(int score);

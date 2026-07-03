@@ -66,7 +66,7 @@ int main()
             {
                 if (keyPressed->code == sf::Keyboard::Key::Escape) {
                     if (game_status == GAME_PLAY) {
-                        game_status = GameState::MAIN_MENU;
+                        game_status = GameState::PAUSED;
                     }
                 }
                 //playing game
@@ -126,10 +126,13 @@ int main()
             ice_floe_layer4.Display(&window);
             player.Display(&window);
             igloo.Display(&window);
+            // welcome_window.drawGame(&window);
         }else if(game_status == GameState::INSTRUCTIONS){
             welcome_window.drawInstructions(&window);
         }else if(game_status == GameState::SCORE_HISTORY){
             welcome_window.drawScoreHistory(&window);
+        }else{
+            welcome_window.drawGamePaused(&window);
         }
         window.display();
     }

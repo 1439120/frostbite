@@ -199,3 +199,27 @@ void WelcomeWindow::addGameScore(int score) {
     saveScore(score);
 }
 
+void WelcomeWindow::drawGame(sf::RenderWindow *window) {
+    // This is where you would draw your actual game
+    // For now, we'll show a placeholder
+    sf::Text gameText = sf::Text(font);
+    gameText.setFont(font);
+    gameText.setString("GAME IN PROGRESS\n\nPress ESC to pause");
+    gameText.setCharacterSize(30);
+    gameText.setFillColor(sf::Color::White);
+    gameText.setPosition(sf::Vector2f(250, 250));
+    window->draw(gameText);
+}
+
+void WelcomeWindow::drawGamePaused(sf::RenderWindow *window) {
+    sf::Text gamePaused = sf::Text(font);
+    gamePaused.setString(
+        "\n\n    === Game Paused ===\n\n"
+    );
+    gamePaused.setCharacterSize(20);
+    gamePaused.setFillColor(sf::Color::White);
+    gamePaused.setPosition(sf::Vector2f(300, 100));
+    
+    window->draw(gamePaused);
+    window->draw(*backButtonText);
+}
