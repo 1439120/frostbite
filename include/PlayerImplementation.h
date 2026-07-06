@@ -16,6 +16,7 @@ public:
     bool MoveUp(float = 4);
     void AutomatedMotion(CollisionDetector &);
     Coordinates GetPosition() const;
+    bool isOutofBounds(Coordinates) const;
 
 private:
     Coordinates _current_position;

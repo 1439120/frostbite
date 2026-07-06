@@ -23,7 +23,7 @@ int main()
     auto ice_floe_layer3 = IceFloeLayer(screen_size, Coordinates(0, 150));
     auto ice_floe_layer4 = IceFloeLayer(screen_size, Coordinates(350, 215));
     auto player = Player(screen_size);
-    player.AdjustPosition(Coordinates(screen_size.x / 2, screen_size.y * 3 / 4 + 10));
+    // player.UpdatePosition(Coordinates(screen_size.x / 2, screen_size.y * 3 / 4 + 10));
     auto welcome_window = WelcomeWindow();
     /* Game control constants */
     auto igloo = Igloo(screen_size);
@@ -110,6 +110,11 @@ int main()
             // Moving the player
             _player.AutomatedMotion(collision_detector);
             player.UpdatePosition(_player.GetPosition());
+            if(_player.isOutofBounds(screen_size)) game_status = GameState::LOST;
+            // Reset game ifnormation
+            if(game_status == GameState::LOST){
+
+            }
         }
         
         // Display objects on the screen

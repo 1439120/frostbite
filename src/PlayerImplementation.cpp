@@ -78,6 +78,12 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
     }
     else if (!std::get<0>(collision_check))
     {
-        // MoveUp();
+        MoveUp();
     }
+}
+
+bool PlayerImplementation::isOutofBounds(Coordinates screen_size) const{
+    if(_current_position.x + _size.x  > screen_size.x &&
+    _current_position.y + _size.y  > screen_size.y) return true;
+    return false;
 }

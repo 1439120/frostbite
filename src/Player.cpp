@@ -10,11 +10,18 @@ Player::Player(Coordinates screen_size)
     size.y = screen_size.x * 1 / 20;
     player.setSize(sf::Vector2f(size.x, size.y));
     player.setTexture(&player_texture);
+    
+    reset_position = Coordinates(screen_size.x / 2, screen_size.y * 3 / 4 + 10);
+    UpdatePosition(reset_position);
 }
 
 void Player::Display(sf::RenderWindow *window)
 {
     window->draw(player);
+}
+
+void Player::ResetCoordinates(){
+    UpdatePosition(reset_position);
 }
 
 void Player::AdjustPosition(Coordinates adjust_by)

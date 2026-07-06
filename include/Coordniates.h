@@ -21,6 +21,8 @@ struct Coordinates
         x = coord.x;
         y = coord.y;
     }
+    Coordinates& operator=(const Coordinates&) = default; // assignment operator
+
     bool operator==(const Coordinates &coord)
     {
         if (this->x == coord.x && this->y == coord.y)

@@ -22,6 +22,7 @@ enum GameState {
     GAME_PLAY,
     SCORE_HISTORY,
     PAUSED,
+    LOST,
 };
 
 class WelcomeWindow {
