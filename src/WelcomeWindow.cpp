@@ -10,6 +10,7 @@ WelcomeWindow::WelcomeWindow() : currentState(MAIN_MENU) {
     loadScores();
     setupMenu();
     setupScoreHistory();
+    setupGameOverMenu();
 }
 
 void WelcomeWindow::setupMenu() {
@@ -56,6 +57,50 @@ void WelcomeWindow::setupScoreHistory() {
     backButtonText->setFillColor(sf::Color::White);
     backButtonText->setPosition(sf::Vector2f(320, 500));
     backButtonBounds = backButtonText->getGlobalBounds();
+}
+
+void WelcomeWindow::setupGameOverMenu(){
+    gameOverTitle.emplace(font, "GAME OVER");
+    gameOverTitle->setCharacterSize(60);
+    gameOverTitle->setStyle(sf::Text::Bold);
+    gameOverTitle->setFillColor(sf::Color::Red);
+    gameOverTitle->setPosition({250.f, 60.f});
+
+    finalScoreText.emplace(font, "");
+    finalScoreText->setCharacterSize(30);
+    finalScoreText->setFillColor(sf::Color::White);
+    finalScoreText->setPosition({300.f, 170.f});
+
+    highScoreText.emplace(font, "");
+    highScoreText->setCharacterSize(30);
+    highScoreText->setFillColor(sf::Color::Yellow);
+    highScoreText->setPosition({300.f, 220.f});
+
+    std::vector<std::string> labels =
+    {
+        "Restart Game",
+        "Main Menu",
+        "Exit"
+    };
+
+    float y = 330.f;
+
+    for (const auto& label : labels)
+    {
+        MenuItem item;
+
+        item.text.emplace(font, label);
+        item.text->setCharacterSize(30);
+        item.text->setFillColor(sf::Color::White);
+        item.text->setPosition({320.f, y});
+
+        item.bounds = item.text->getGlobalBounds();
+        item.isHovered = false;
+
+        gameOverItems.push_back(item);
+
+        y += 60.f;
+    }
 }
 
 void WelcomeWindow::loadScores() {
@@ -134,6 +179,29 @@ GameState WelcomeWindow::handleMouseClick(int mouseX, int mouseY, sf::RenderWind
             currentState = MAIN_MENU;
         }
     }
+    else if (currentState == GAME_OVER)
+    {
+        for (size_t i = 0; i < gameOverItems.size(); i++)
+        {
+            if (gameOverItems[i].bounds.contains(mousePos))
+            {
+                switch (i)
+                {
+                    case 0: // Restart
+                        currentState = GAME_PLAY;
+                        return GAME_PLAY;
+
+                    case 1: // Main Menu
+                        currentState = MAIN_MENU;
+                        return MAIN_MENU;
+
+                    case 2: // Exit
+                        window->close();
+                        break;
+                }
+            }
+        }
+    }
     return currentState;
 }
 
@@ -150,6 +218,19 @@ void WelcomeWindow::handleMouseMove(int mouseX, int mouseY) {
     if (currentState == SCORE_HISTORY || currentState == INSTRUCTIONS) {
         backButtonText->setFillColor(backButtonBounds.contains(mousePos) ? 
                                 sf::Color::Yellow : sf::Color::White);
+    }
+
+    if (currentState == GAME_OVER)
+    {
+        for (auto& item : gameOverItems)
+        {
+            item.isHovered = item.bounds.contains(mousePos);
+
+            item.text->setFillColor(
+                item.isHovered ?
+                sf::Color::Yellow :
+                sf::Color::White);
+        }
     }
 }
 
@@ -222,4 +303,17 @@ void WelcomeWindow::drawGamePaused(sf::RenderWindow *window) {
     
     window->draw(gamePaused);
     window->draw(*backButtonText);
+}
+
+void WelcomeWindow::showGameOver(int score, int highScore)
+{
+    finalScoreText->setString("Final Score : " + std::to_string(score));
+    highScoreText->setString("High Score  : " + std::to_string(highScore));
+
+    window->draw(*gameOverTitle);
+    window->draw(*finalScoreText);
+    window->draw(*highScoreText);
+
+    for (auto& item : gameOverItems)
+        window->draw(*item.text);
 }

@@ -22,7 +22,7 @@ enum GameState {
     GAME_PLAY,
     SCORE_HISTORY,
     PAUSED,
-    LOST,
+    GAME_OVER,
 };
 
 class WelcomeWindow {
@@ -36,6 +36,12 @@ class WelcomeWindow {
         std::optional<sf::Text> scoreHistoryText;
         std::optional<sf::Text> backButtonText;
         sf::Rect<float> backButtonBounds;
+        // game over
+        std::optional<sf::Text> gameOverTitle;
+        std::optional<sf::Text> finalScoreText;
+        std::optional<sf::Text> highScoreText;
+        std::vector<MenuItem> gameOverItems;
+        void setupGameOverMenu();
 
     public:
         WelcomeWindow();
@@ -51,6 +57,7 @@ class WelcomeWindow {
         void drawScoreHistory(sf::RenderWindow *window);
         void drawGamePaused(sf::RenderWindow *window);
         void drawGame(sf::RenderWindow *window);
+        void drawGameOver(int score, int highScor, sf::RenderWindow *window);
     
         // Method to add score from game
         void addGameScore(int score);

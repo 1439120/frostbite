@@ -17,6 +17,7 @@ public:
     void AutomatedMotion(CollisionDetector &);
     Coordinates GetPosition() const;
     bool isOutofBounds(Coordinates) const;
+    void ResetPosition(Coordinates);
 
 private:
     Coordinates _current_position;

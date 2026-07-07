@@ -8,6 +8,10 @@ PlayerImplementation::PlayerImplementation(Coordinates current_position, Coordin
     _vertical_motion = 0;
 }
 
+void PlayerImplementation::ResetPosition(Coordinates new_coord){
+    _current_position = new_coord;
+}
+
 bool PlayerImplementation::MoveLeft(CollisionDetector &collision_detector, float speed)
 {
     _current_position.x -= speed;
