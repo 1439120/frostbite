@@ -8,7 +8,7 @@ class ScoreBoard
 {
 public:
     ScoreBoard(Coordinates); //
-    void Display(sf::RenderWindow *window);
+    void Display(sf::RenderWindow *window, int score_);
 
 private:
     sf::Font font_vouge;

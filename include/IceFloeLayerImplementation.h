@@ -15,7 +15,7 @@ public:
     void ChangeDirection(bool);
     const Coordinates GetPosition() const;
     float GetLength() const;
-    void ResetPosition(Coordinates);
+    std::vector<Coordinates> ResetPosition(Coordinates);
 
 private:
     std::vector<Coordinates> _current_position;

@@ -7,13 +7,14 @@ IceFloeLayerImplementation::IceFloeLayerImplementation(Coordinates current_posit
     ResetPosition(current_position);
 }
 
-void IceFloeLayerImplementation::ResetPosition(Coordinates current_position){
+std::vector<Coordinates> IceFloeLayerImplementation::ResetPosition(Coordinates current_position){
     for (auto i = 0.0f; i < 5; i += 1.8)
     {
         Coordinates coordinates = current_position;
         coordinates.x = coordinates.x + i * _size.x / 4.6;
         _current_position.push_back(coordinates);
     }
+    return _current_position;
 }
 
 Coordinates IceFloeLayerImplementation::MoveIceLayer(float speed)

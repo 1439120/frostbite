@@ -50,6 +50,7 @@ class WelcomeWindow {
         void loadScores();    
         void saveScore(int score);
         void updateScoreHistory();
+        void updateState(GameState state);
         GameState handleMouseClick(int mouseX, int mouseY, sf::RenderWindow *window);
         void handleMouseMove(int mouseX, int mouseY);
         void drawMainMenu(sf::RenderWindow *window);
@@ -61,6 +62,7 @@ class WelcomeWindow {
     
         // Method to add score from game
         void addGameScore(int score);
+        int getHighScore();
 };
 
 #endif

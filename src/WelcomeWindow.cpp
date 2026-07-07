@@ -98,6 +98,7 @@ void WelcomeWindow::setupGameOverMenu(){
         item.isHovered = false;
 
         gameOverItems.push_back(item);
+        gameOverItems.back().bounds = gameOverItems.back().text->getGlobalBounds();
 
         y += 60.f;
     }
@@ -121,13 +122,36 @@ void WelcomeWindow::saveScore(int score) {
     scores.push_back(score);
     std::sort(scores.begin(), scores.end(), std::greater<int>());
 
-    std::ofstream file("scores.txt");
+    std::ofstream file("data/scores.txt");
     if (file.is_open()) {
         for (int s : scores) {
             file << s << std::endl;
         }
         file.close();
     }
+}
+
+int WelcomeWindow::getHighScore() {
+    // If we already have scores loaded in memory, return the top one
+    if (!scores.empty()) {
+        return scores[0];
+    }
+
+    // Fallback: If vector is empty, try to read directly from the file
+    std::ifstream file("data/scores.txt");
+    int highest_score = 0;
+
+    if (file.is_open()) {
+        if (file >> highest_score) {
+            // Read the very first number since the file is pre-sorted
+            file.close();
+            return highest_score;
+        }
+        file.close();
+    }
+
+    // Return 0 if the file doesn't exist or is completely empty
+    return 0; 
 }
 
 void WelcomeWindow::updateScoreHistory() {
@@ -145,6 +169,10 @@ void WelcomeWindow::updateScoreHistory() {
         }
     }
     scoreHistoryText->setString(historyText);
+}
+
+void WelcomeWindow::updateState(GameState state){
+    currentState = state;
 }
 
 GameState WelcomeWindow::handleMouseClick(int mouseX, int mouseY, sf::RenderWindow *window) {
@@ -277,7 +305,13 @@ void WelcomeWindow::drawScoreHistory(sf::RenderWindow *window) {
 }
 
 void WelcomeWindow::addGameScore(int score) {
-    saveScore(score);
+    // Check if the score already exists anywhere in the scores vector
+    auto it = std::find(scores.begin(), scores.end(), score);
+    
+    // If it equals scores.end(), it means the score was NOT found
+    if (it == scores.end()) {
+        saveScore(score);
+    }
 }
 
 void WelcomeWindow::drawGame(sf::RenderWindow *window) {

@@ -20,8 +20,10 @@ ScoreBoard::ScoreBoard(Coordinates screen_size)
     level->setPosition(sf::Vector2f(width * 2 + width, height * 2));
 }
 
-void ScoreBoard::Display(sf::RenderWindow *window)
+void ScoreBoard::Display(sf::RenderWindow *window, int score_)
 {
+    score->setString(std::to_string(score_));
+    level->setString(std::to_string( int(score_/100) + 1));
     window->draw(*score);
     window->draw(*temperature);
     window->draw(*level);

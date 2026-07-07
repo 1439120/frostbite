@@ -30,6 +30,8 @@ int main()
     const auto icefloe_speed = 0.05;
     const auto player_speed = 500 * icefloe_speed;
     const auto jump_speed = player_speed * 0.1;
+    auto current_score = 0.0f;
+    auto display_score = 0.0f;
     auto game_status = GameState::MAIN_MENU;
 
     /**Implementation Classes*/
@@ -47,6 +49,7 @@ int main()
     {
         while (const std::optional event = window.pollEvent())
         {
+            welcome_window.updateState(game_status);
             // 1. Handle Window Closing
             if (event->is<sf::Event::Closed>())
                 window.close();
@@ -73,18 +76,22 @@ int main()
                 if (keyPressed->code == sf::Keyboard::Key::Left)
                 {
                     _player.MoveLeft(collision_detector, player_speed);
+                    current_score += 0.7;
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Right)
                 {
                     _player.MoveRight(collision_detector, player_speed);
+                    current_score += 0.7;
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Up)
                 {
                     _player.MoveUp();
+                    current_score += 5;
                 }
                 else if (keyPressed->code == sf::Keyboard::Key::Down)
                 {
                     _player.MoveDown(jump_speed);
+                    current_score += 10;
                 }
             }
         }
@@ -106,6 +113,7 @@ int main()
                 ice_floe_3_position,
                 ice_floe_4_position,
             });
+            current_score += 0.01;
 
             // Moving the player
             _player.AutomatedMotion(collision_detector);
@@ -122,10 +130,11 @@ int main()
                 ice_floe_layer2.ResetPosition(Coordinates(350, 85));
                 ice_floe_layer3.ResetPosition(Coordinates(0, 150));
                 ice_floe_layer4.ResetPosition(Coordinates(350, 215));
-                _ice_floe_layer1.ResetPosition(ice_floe_layer1.GetPosition());
-                _ice_floe_layer2.ResetPosition(ice_floe_layer2.GetPosition());
-                _ice_floe_layer3.ResetPosition(ice_floe_layer3.GetPosition());
-                _ice_floe_layer4.ResetPosition(ice_floe_layer4.GetPosition());
+                auto ice_floe_1_position = _ice_floe_layer1.ResetPosition(ice_floe_layer1.GetPosition());
+                auto ice_floe_2_position = _ice_floe_layer2.ResetPosition(ice_floe_layer2.GetPosition());
+                auto ice_floe_3_position = _ice_floe_layer3.ResetPosition(ice_floe_layer3.GetPosition());
+                auto ice_floe_4_position = _ice_floe_layer4.ResetPosition(ice_floe_layer4.GetPosition());
+                current_score = 0;
             }
         }
         
@@ -135,8 +144,9 @@ int main()
             welcome_window.drawMainMenu(&window);
         }
         else if(game_status == GameState::GAME_PLAY){
+            if (int(current_score) % 11 == 0 || int(current_score) % 13 == 0) display_score = current_score;
             game_window.Display(&window);
-            score_bored.Display(&window);
+            score_bored.Display(&window, int(display_score));
             ice_floe_layer1.Display(&window);
             ice_floe_layer2.Display(&window);
             ice_floe_layer3.Display(&window);
@@ -149,12 +159,9 @@ int main()
         }else if(game_status == GameState::SCORE_HISTORY){
             welcome_window.drawScoreHistory(&window);
         }else if(game_status == GameState::GAME_OVER){
-            welcome_window.drawGameOver(2,3,&window);
-            // ice_floe_layer1.Display(&window);
-            // ice_floe_layer2.Display(&window);
-            // ice_floe_layer3.Display(&window);
-            // ice_floe_layer4.Display(&window);
-            // player.Display(&window);
+            welcome_window.addGameScore(display_score);
+            auto highscore = welcome_window.getHighScore();
+            welcome_window.drawGameOver(display_score,highscore,&window);
         }else{
             welcome_window.drawGamePaused(&window);
         }
