@@ -16,6 +16,18 @@ IceFloeLayer::IceFloeLayer(Coordinates screen_size, Coordinates adjust_by)
     ice_floe_layer.push_back(ice_floe3);
 }
 
+void IceFloeLayer::ResetPosition(Coordinates adjust_by){
+    auto multiplier = 0.f;
+    auto adjuster = adjust_by.x;
+    for (auto& layer : ice_floe_layer)
+    {
+        layer.ResetPosition();
+        layer.AdjustPosition(Coordinates(adjuster, adjust_by.y));
+        multiplier += 1.8;
+        adjuster = multiplier * layer.GetSize().x + adjust_by.x;
+    }
+}
+
 void IceFloeLayer::Display(sf::RenderWindow *window)
 {
     for (auto ice_floe = ice_floe_layer.begin(); ice_floe != ice_floe_layer.end(); ice_floe++)

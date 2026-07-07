@@ -189,11 +189,11 @@ GameState WelcomeWindow::handleMouseClick(int mouseX, int mouseY, sf::RenderWind
                 {
                     case 0: // Restart
                         currentState = GAME_PLAY;
-                        return GAME_PLAY;
+                        break;
 
                     case 1: // Main Menu
                         currentState = MAIN_MENU;
-                        return MAIN_MENU;
+                        break;
 
                     case 2: // Exit
                         window->close();
@@ -305,7 +305,7 @@ void WelcomeWindow::drawGamePaused(sf::RenderWindow *window) {
     window->draw(*backButtonText);
 }
 
-void WelcomeWindow::showGameOver(int score, int highScore)
+void WelcomeWindow::drawGameOver(int score, int highScore, sf::RenderWindow *window)
 {
     finalScoreText->setString("Final Score : " + std::to_string(score));
     highScoreText->setString("High Score  : " + std::to_string(highScore));

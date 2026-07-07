@@ -86,8 +86,10 @@ void PlayerImplementation::AutomatedMotion(CollisionDetector &collision_detector
     }
 }
 
-bool PlayerImplementation::isOutofBounds(Coordinates screen_size) const{
-    if(_current_position.x + _size.x  > screen_size.x &&
-    _current_position.y + _size.y  > screen_size.y) return true;
-    return false;
+bool PlayerImplementation::isOutofBounds(Coordinates screen_size) const
+{
+    return _current_position.x < 0 ||
+           _current_position.y < 0 ||
+           _current_position.x > screen_size.x ||
+           _current_position.y > screen_size.y;
 }

@@ -7,6 +7,7 @@
 #include "CollisionDetector.h"
 #include "PlayerImplementation.h"
 #include "WelcomeWindow.h"
+#include <iostream>
 
 const auto screen_size = Coordinates(1000, 600);
 const auto board_width = 3;
@@ -111,9 +112,20 @@ int main()
             player.UpdatePosition(_player.GetPosition());
             if(_player.isOutofBounds(screen_size)) game_status = GameState::GAME_OVER;
             // Reset game ifnormation
+            // std::cout << "1";
             if(game_status == GameState::GAME_OVER){
+                std::cout << "Do we come here";
                 player.ResetCoordinates();
-                // _player.
+                _player.ResetPosition(player.GetPosition());
+                // resets bars
+                ice_floe_layer1.ResetPosition(Coordinates(0, 20));
+                ice_floe_layer2.ResetPosition(Coordinates(350, 85));
+                ice_floe_layer3.ResetPosition(Coordinates(0, 150));
+                ice_floe_layer4.ResetPosition(Coordinates(350, 215));
+                _ice_floe_layer1.ResetPosition(ice_floe_layer1.GetPosition());
+                _ice_floe_layer2.ResetPosition(ice_floe_layer2.GetPosition());
+                _ice_floe_layer3.ResetPosition(ice_floe_layer3.GetPosition());
+                _ice_floe_layer4.ResetPosition(ice_floe_layer4.GetPosition());
             }
         }
         
@@ -136,6 +148,13 @@ int main()
             welcome_window.drawInstructions(&window);
         }else if(game_status == GameState::SCORE_HISTORY){
             welcome_window.drawScoreHistory(&window);
+        }else if(game_status == GameState::GAME_OVER){
+            welcome_window.drawGameOver(2,3,&window);
+            // ice_floe_layer1.Display(&window);
+            // ice_floe_layer2.Display(&window);
+            // ice_floe_layer3.Display(&window);
+            // ice_floe_layer4.Display(&window);
+            // player.Display(&window);
         }else{
             welcome_window.drawGamePaused(&window);
         }

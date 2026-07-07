@@ -4,7 +4,10 @@ IceFloeLayerImplementation::IceFloeLayerImplementation(Coordinates current_posit
     : _current_direction(current_direction), _size(size)
 
 {
-    // _current_position(current_position),
+    ResetPosition(current_position);
+}
+
+void IceFloeLayerImplementation::ResetPosition(Coordinates current_position){
     for (auto i = 0.0f; i < 5; i += 1.8)
     {
         Coordinates coordinates = current_position;

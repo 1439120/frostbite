@@ -16,6 +16,7 @@ public:
     void UpdatePosition(Coordinates);
     void AdjustPerIce(std::vector<Coordinates>);
     void UpdatePerIce(std::vector<Coordinates>);
+    void ResetPosition(Coordinates);
 
 private:
     std::vector<IceFloe> ice_floe_layer;
